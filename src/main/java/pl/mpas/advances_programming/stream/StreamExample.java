@@ -1,6 +1,7 @@
 package pl.mpas.advances_programming.stream;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -34,23 +35,39 @@ public class StreamExample {
     }
 
     public static List<String> getIngredientsNames(List<Order> orders) {
-      //  IntStream.range(1, 100)  - nie robimy takich
-        return  orders.stream()
+        //  IntStream.range(1, 100)  - nie robimy takich
+        return orders.stream()
                 .flatMap(order -> order.getMyItems().stream())
-                        .flatMap(item -> item.getIngredientsList().stream())
+                .flatMap(item -> item.getIngredientsList().stream())
                 .map(ingredient -> ingredient.getName())
                 .distinct()
-                        .collect(Collectors.toList());
+                .collect(Collectors.toList());
     }
 
-    public static BigDecimal getSumaPrice (List<Order> orders){
-      return   orders.stream()
+    public static BigDecimal getSumaPrice(List<Order> orders) {
+        return orders.stream()
                 .flatMap(order -> order.getMyItems().stream())
                 .map(item -> item.getPrice())
                 .reduce(BigDecimal.ZERO, ((bigDecimal, bigDecimal2) -> bigDecimal.add(bigDecimal2)));
-
-
     }
 
+    public static List<String> getIngredientsNamesWithReduce(List<Order> orders) {
+        //  IntStream.range(1, 100)  - nie robimy takich
+        List<String> result = new ArrayList<>();
+        orders.stream()
+                .flatMap(order -> order.getMyItems().stream())
+                .flatMap(item -> item.getIngredientsList().stream())
+                .map(ingredient -> ingredient.getName())
+                .distinct()
+                .reduce(result,
+                        (strings, s) -> {
+                            strings.add(s);
+                            System.out.println(strings);
+                            return strings;
+                        },
+                        (strings, strings2) -> result);
 
+        return Collections.emptyList();
+
+    }
 }
