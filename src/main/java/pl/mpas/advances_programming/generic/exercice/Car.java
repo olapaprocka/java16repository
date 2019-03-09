@@ -5,8 +5,9 @@ public class Car implements Vehicle {
     private String carName;
     private Integer YearProduction;
 
-    public Car(String carName, Integer yearProduction) {
+    public Car() {
         this.carName = carName;
+        Integer yearProduction = null;
         YearProduction = yearProduction;
     }
 

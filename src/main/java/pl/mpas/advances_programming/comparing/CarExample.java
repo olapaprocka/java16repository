@@ -23,8 +23,8 @@ public class CarExample {
         System.out.println(autos);
 
 
-        Auto autoToCompare = new Auto("Opel", "Astra ", 1700, 2019, "Red", LocalDate.of(2019, 12, 12));
-        autoToCompare.maybeComparing((Auto o) -> 1);
+//        Auto auto ToCompare = new Auto("Opel", "Astra ", 1700, 2019, "Red", LocalDate.of(2019, 12, 12));
+//        autoToCompare.maybeComparing((Auto o) -> 1);
 
 
         Collections.sort(autos, (o1, o2) -> o1.getMarka().compareTo(o2.getMarka()));
