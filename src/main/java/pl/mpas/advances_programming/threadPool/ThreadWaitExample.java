@@ -18,7 +18,7 @@ public class ThreadWaitExample {
 
         ExecutorService workers = Executors.newFixedThreadPool(4);
 
-        for (int j = 0; j < 200; j++) {
+        for (int j = 0; j < 10; j++) {
             workers.execute(job);
         }
         workers.shutdown();
@@ -26,7 +26,7 @@ public class ThreadWaitExample {
         boolean done = false;
         do {
             try {
-                done = workers.awaitTermination(1, TimeUnit.SECONDS);
+                done = workers.awaitTermination(100, TimeUnit.SECONDS);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -34,24 +34,23 @@ public class ThreadWaitExample {
             while (!done) ;
 
 
-            while (true) {
-                try {
-                    done = workers.awaitTermination(1, TimeUnit.SECONDS);
-                    if (done) {
-                        break;
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            }
-           // System.out.println("i= " + i);
-
-
-            //   System.out.println("after sending........");
+//            while (true) {
+//                try {
+//                    done = workers.awaitTermination(1, TimeUnit.SECONDS);
+//                    if (done) {
+//                        break;
+//                    }
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+            System.out.println("i= " + i);
 
 
-    };
+            System.out.println("after sending........");
+
+
+        }
+    }
 }
-}
-
