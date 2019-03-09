@@ -6,14 +6,14 @@ import java.util.concurrent.TimeUnit;
 
 public class ThreadWaitExample {
 
-    static private int i =  0;
+    static private int i = 0;
 
     public static void main(String[] args) {
 
         Runnable job = () -> {
-           synchronized(ThreadWaitExample.class) {
-               i++;
-           }
+            synchronized (ThreadWaitExample.class) {
+                i++;
+            }
         };
 
         ExecutorService workers = Executors.newFixedThreadPool(4);
@@ -22,16 +22,36 @@ public class ThreadWaitExample {
             workers.execute(job);
         }
         workers.shutdown();
-try {
 
-    workers.awaitTermination(1000, TimeUnit.DAYS);
-}catch (InterruptedException e){
-    e.printStackTrace();
+        boolean done = false;
+        do {
+            try {
+                done = workers.awaitTermination(1, TimeUnit.SECONDS);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            while (!done) ;
+
+
+            while (true) {
+                try {
+                    done = workers.awaitTermination(1, TimeUnit.SECONDS);
+                    if (done) {
+                        break;
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+           // System.out.println("i= " + i);
+
+
+            //   System.out.println("after sending........");
+
+
+    };
 }
-        System.out.println("i= " + i);
-
-
-     //   System.out.println("after sending........");
-    }
 }
 
